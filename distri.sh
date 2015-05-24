@@ -8,10 +8,10 @@
 GIT_DIR_E=./emacs
 GIT_DIR_V=./vim
 
-TARGET_DIR_E=/d/GNU\ Emacs
-TARGET_DIR_V=/d/Vim
+TARGET_DIR_E=~/.Emacs
+TARGET_DIR_V=~/.vimrc
 
 # Following commands still need condition judgement as ">>" operates accumulatively.
-#cat ${GIT_DIR_E}/.emacs >> ${TARGET_DIR_E}/.emacs
-#cat ${GIT_DIR_V}/.vimrc >> ${TARGET_DIR_V}/_vimrc
+#cat ${GIT_DIR_E}/.emacs >> ${TARGET_DIR_E}
+cp ${GIT_DIR_V}/.vimrc ${TARGET_DIR_V}
 
