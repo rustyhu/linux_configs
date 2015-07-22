@@ -2,7 +2,8 @@
 
 " Basics
 set number
-set nobackup
+"" As rm command is very dangerous in Unix-like systems, keeping a backup for files is necessary.""
+"" set nobackup	
 set showcmd
 syntax on
 " Indent

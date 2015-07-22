@@ -5,7 +5,8 @@
 (tool-bar-mode -1) 
 ;(menu-bar-mode -1) ; bars off
 
-(setq make-backup-files nil) ;; turn off adding backup file
+;; As rm command is very dangerous in Unix-like systems, keeping a backup for files is necessary. 
+;;(setq make-backup-files nil) ;; turn off adding backup file
 
 (column-number-mode t)
 (line-number-mode t) ;; mode line: line & column numbering
