@@ -23,5 +23,7 @@ endif
 filetype indent on
 "" For python
 autocmd FileType python setlocal et sta sw=4 sts=4
+"" For C/C++
+set expandtab
 
 """"""""""END CUSTOMIZATION""""""""""
