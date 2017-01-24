@@ -1,10 +1,7 @@
-Configurations of Tools in Linux
+Configurations of Linux(system administration perspective)
 ================
 
-## Distributions
- Arch, Debian.
+## Distribution
+ Start with Debian...
 ## Purpose
  Do the environment setting work automatically. (Maybe?)
-## Included Items
- Emacs
- Vim
