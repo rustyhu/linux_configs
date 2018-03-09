@@ -2,20 +2,35 @@
 
 # install or update
 ACTION="install"
-PACKAGES="bm"
+PACKAGES="dm bm ms vm"     # packages: VMPS, DM, MS
+VERSION="3329"
 
 extract()
 {
-  # packages: VMPS, VM(patch), DM, MS
-  BASE="DM MS VMPS"
-  VERSION="3329"
-  for i in ${BASE}
+  BASE=""
+  for i in ${PACKAGES}
   do
+    case "$i" in
+      "vm" ) BASE="VMPS";;
+      "dm" ) BASE="DM";;
+      "bm" ) BASE="DM";;
+      "ms" ) BASE="MS";;
+      * )
+        echo "Invalid package name!"
+        exit 1
+        ;;
+    esac
+
     # start debug
-    #echo ${i}*3328.tar.gz
+    #echo ${BASE}*3328.tar.gz
     # end debug
-  
-    tar -xvf ${i}*${VERSION}.tar.gz
+
+    # if DM package was already extracted, omit it
+    [ "$BASE" == "DM" ] && [ -d "./dm8500_Uniview" ] && continue
+
+    echo "Extract ${BASE} package. It may cost some time and please wait..."
+    tar -xf ${BASE}*${VERSION}.tar.gz
+    echo "Finish extracting ${BASE} package."
   done
 }
 
@@ -75,6 +90,6 @@ prepare()
 
 }
 
-prepare
-#extract
-execute
+extract
+#prepare
+#execute
