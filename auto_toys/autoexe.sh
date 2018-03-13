@@ -1,9 +1,19 @@
 #!/bin/bash
 
+######################################################################
+# WARNING:
+# This auto script install or update VM and surrounding servers with
+# ALL DEFAULT INSTALL OPTIONS! You only need to do manual configures
+# when install VM.
+#
+# by h02929
+######################################################################
+
 # install or update
 ACTION="install"
-PACKAGES="dm bm ms vm"     # packages: VMPS, DM, MS
+PACKAGES="vm dm bm ms"    # packages: VMPS, DM, MS, TMS
 VERSION="3329"
+DICT_NAME="8500_Uniview"  # 8500, 9500
 
 extract()
 {
@@ -15,6 +25,7 @@ extract()
       "dm" ) BASE="DM";;
       "bm" ) BASE="DM";;
       "ms" ) BASE="MS";;
+      "tms" ) BASE="TMS";;
       * )
         echo "Invalid package name!"
         exit 1
@@ -39,23 +50,28 @@ execute()
   # vm,bm,dm,ms update
   for i in ${PACKAGES}
   do
-    pushd ${i}8500_Uniview
-    if [ "${i}" == "bm" ] && [ "${ACTION}" == "install" ]
-    then
-      ./${ACTION}${i}.sh << eof
-
-eof
+    if [ "${ACTION}" == "install" ] && [ "${i}" == "bm" ]; then
+      CMD=${ACTION}${i}.sh
     else
-      ./${i}${ACTION}.sh << eof
-yes
+      CMD=${i}${ACTION}.sh
+    fi
+
+    pushd ${i}${DICT_NAME}
+    if [ "${ACTION}" == "install" ] && [ "${i}" == "vm" ]; then
+      # vminstall need to do manual config
+      ./${CMD}
+    else
+      # update, at each prompts input enter to use default
+      ./${CMD} << eof
+
 eof
     fi
     popd
 
-    # seperate
+    # show status message
     for j in {1..10}
     do
-     echo
+      echo
     done
     echo "${i} ${ACTION} finished!" 
 
@@ -65,31 +81,32 @@ eof
 prepare()
 {
   # uninstall or such things
-  if [ "${ACTION}" == "install" ]
-  then
-    SUFFIX="uninstall.sh"
-  else
-    # update: stop services
-    SUFFIX="server.sh"
-  fi
-
-  CMDS=${PACKAGES}${SUFFIX}
-
-  for i in ${CMDS}
+  for i in ${PACKAGES}
   do
+    if [ "${ACTION}" == "install" ]
+    then
+      SUFFIX="uninstall.sh"
+    else
+      # update: stop services
+      SUFFIX="server.sh"
+    fi
+
+    CMD=${i}${SUFFIX}
     ##if this cmd exists
-    if [ -n "$(type ${i} 2>/dev/null)" ]
+    if [ -n "$(type ${CMD} 2>/dev/null)" ]
     then
       if [ "${ACTION}" == "install" ]; then
-        ${CMDS}
+        # uninstall
+        ${CMD} << eof
+yes
+eof
       else
-        ${CMDS} stop
+        ${CMD} stop
       fi
     fi
   done
-
 }
 
-extract
 #prepare
-#execute
+extract
+execute
