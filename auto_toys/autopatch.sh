@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## example
-#pushd VM8500-IMOS110-B3323H01
+#pushd vm
 #./patchinstall.sh
 #<< eof
 #yes
@@ -11,7 +11,7 @@
 # fulfill list of patch names such as "B3326H03"
 PLIST="B3326H03 B3326H26"
 
-BASE='VM8500-IMOS110-'
+BASE='vm'
 for i in ${PLIST} 
 do
   # start debug

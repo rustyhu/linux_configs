@@ -13,7 +13,7 @@
 ACTION="install"
 PACKAGES="vm dm bm ms"    # packages: VMPS, DM, MS, TMS
 VERSION="3329"
-DICT_NAME="8500_Uniview"  # 8500, 9500
+DICT_NAME="8500_"  # 8500, 9500
 
 extract()
 {
@@ -37,7 +37,7 @@ extract()
     # end debug
 
     # if DM package was already extracted, omit it
-    [ "$BASE" == "DM" ] && [ -d "./dm8500_Uniview" ] && continue
+    [ "$BASE" == "DM" ] && [ -d "./dm8500_" ] && continue
 
     echo "Extract ${BASE} package. It may cost some time and please wait..."
     tar -xf ${BASE}*${VERSION}.tar.gz
