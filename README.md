@@ -1,7 +1,9 @@
-Configurations of Linux(system administration perspective)
-================
+# My Linux configurations
 
-## Distribution
- Start with Debian...
-## Purpose
- Do the environment setting work automatically. (Maybe?)
+Include some `dotfiles`.
+
+## Distributions
+Already used in:
+
+- Debian
+- Arch

@@ -15,17 +15,24 @@ alias gvi='gvim --noplugins'
 
 ##### Develop Environment
 # Rust
-export PATH="/opt/rust/.cargo/bin:$PATH"
-export CARGO_HOME='/opt/rust/.cargo'
-export RUSTUP_HOME='/opt/rust/.rustup'
-#export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+ROOT=$HOME
+[[ -d "/opt/rust" ]] && ROOT="/opt/rust"
+if [[ -d "$ROOT/.cargo" ]]; then
+    export PATH="${ROOT}/.cargo/bin:$PATH"
+    export CARGO_HOME="${ROOT}/.cargo"
+    export RUSTUP_HOME="${ROOT}/.rustup"
+    #export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+fi
 
 # Go
-export GOPATH=/opt/go
-export PATH=$PATH:$GOPATH/bin
+GOPATH=$HOME/go
+[[ -d "/opt/go" ]] && GOPATH="/opt/go"
+if [[ -d "$GOPATH" ]]; then
+    export PATH="${GOPATH}/bin:$PATH"
+fi
 
 # NVM
-#export NVM_DIR="/opt/nvm"
+#export NVM_DIR="/opt/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
