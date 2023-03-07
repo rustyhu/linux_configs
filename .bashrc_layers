@@ -13,22 +13,53 @@ alias grep='grep --color=auto'
 alias vi='vim --noplugins'
 alias gvi='gvim --noplugins'
 
+##### Handy things
+# https://unix.stackexchange.com/a/114256
+function cdls {
+  if (( $# == 0 )); then
+    echo "usage: $FUNCNAME [-l|0|1|2|...]"
+    echo "-l    List all paths;"
+    return
+  fi
+
+  # Edit or override your list of paths!
+  [[ -z "${cdlsarray+x}" ]] && cdlsarray=(
+    '/tmp'
+    '/etc'
+    ~/.local
+  )
+
+  case $1 in
+    -l)
+      echo "Current cdlist:"
+      for i in ${!cdlsarray[@]}
+      do
+        echo "$i - ${cdlsarray[i]}"
+      done
+    ;;
+
+    0 | 1 | 2) cd "${cdlsarray[$1]}" ;;
+
+    *) echo "Undefined path." ;;
+  esac
+}
+
 ##### Develop Environment
 # Rust
-ROOT=$HOME
-[[ -d "/opt/rust" ]] && ROOT="/opt/rust"
-if [[ -d "$ROOT/.cargo" ]]; then
-    export PATH="${ROOT}/.cargo/bin:$PATH"
-    export CARGO_HOME="${ROOT}/.cargo"
-    export RUSTUP_HOME="${ROOT}/.rustup"
-    #export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+RUSTPATH=$HOME
+[[ -d "/opt/rust" ]] && RUSTPATH="/opt/rust"
+if [[ -d "$RUSTPATH/.cargo" ]]; then
+  export PATH="${RUSTPATH}/.cargo/bin:$PATH"
+  export CARGO_HOME="${RUSTPATH}/.cargo"
+  export RUSTUP_HOME="${RUSTPATH}/.rustup"
+  #export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 fi
 
 # Go
 GOPATH=$HOME/go
 [[ -d "/opt/go" ]] && GOPATH="/opt/go"
 if [[ -d "$GOPATH" ]]; then
-    export PATH="${GOPATH}/bin:$PATH"
+  export PATH="${GOPATH}/bin:$PATH"
 fi
 
 # NVM

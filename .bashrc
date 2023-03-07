@@ -1,8 +1,9 @@
-##### A simple template #####
+##### Only some advices for .bashrc, copy or not #####
 
+### A prompt color suggestion
 PS1='\[\e[1;32m\][\u@\h\[\e[m\] \[\e[1;33m\]\W]\[\e[m\]\$ '
 
-##### Layers
+### Layers
 if [[ -f ~/linux_configs/.bashrc_layers ]]; then
   source ~/linux_configs/.bashrc_layers
 fi
