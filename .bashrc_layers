@@ -22,7 +22,7 @@ function cdls {
     return
   fi
 
-  # Edit or override your list of paths!
+  # Edit your `cdlsarray` in main .bashrc to override this list of paths
   [[ -z "${cdlsarray+x}" ]] && cdlsarray=(
     '/tmp'
     '/etc'
@@ -38,9 +38,13 @@ function cdls {
       done
     ;;
 
-    0 | 1 | 2) cd "${cdlsarray[$1]}" ;;
-
-    *) echo "Undefined path." ;;
+    *)
+      if (( $1 >= 0 )) && (( $1 < ${#cdlsarray[@]} )); then
+        cd "${cdlsarray[$1]}"
+      else
+        echo "Undefined path."
+      fi
+    ;;
   esac
 }
 
